@@ -35,10 +35,8 @@ fun MoreScreen(MainNav:NavHostController) {
         Text(text = disH.price,color = Color.Red)
 
         Button(onClick = {
-            startDestination = "Cart"
             MainNav
-            .navigate("MainScreen")
-                         },
+            .navigate("MainScreen") },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = Color.Red,
                 contentColor = Color.White

@@ -1,11 +1,8 @@
 package com.example.a01022022
 
-import android.app.Dialog
 import android.content.SharedPreferences
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.widget.ShareActionProvider
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -23,10 +20,9 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -37,7 +33,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import java.util.*
 
 lateinit var pref:SharedPreferences
-var startDestination = "Home"
 var LOGIN:String? = ""
 
 var PWD:String? = ""
@@ -54,11 +49,12 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 val MainNav = rememberNavController()
 
+
                 NavHost(navController = MainNav, startDestination = "LoginScreen"){
-                    composable("LoginScreen"){LoginScreen(MainNav)}
+                    composable("LoginScreen"){LoginScreen(MainNav = MainNav)}
                     composable("BankomatScreen"){ BankomatScreen(MainNav = MainNav)}
                     composable("ValuteScreen"){ ValuteScreen(MainNav = MainNav)}
-                    composable("MainScreen"){ MainScreen(MainNav = MainNav, startDestination )}
+                    composable("MainScreen"){ MainScreen(MainNav = MainNav) }
                     composable("MoreScreen"){ MoreScreen(MainNav = MainNav) }
                 }
             }
@@ -96,7 +92,6 @@ fun LoginScreen(MainNav:NavHostController) {
             }else
             {
                 ApiRequests().Auth(user(LOGIN!!,PWD!!)){
-                    startDestination = "Home"
                     MainNav.navigate("MainScreen")
                 }
             }
@@ -145,7 +140,6 @@ fun Dialog(dialogValue: MutableState<Boolean>,MainNav: NavHostController) {
                         edit.putString("LOGIN",login)
                         edit.putString("PWD",password)
                         edit.apply()
-                        startDestination = "Home"
                         MainNav.navigate("MainScreen")
                     }
                      }, colors = ButtonDefaults

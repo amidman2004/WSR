@@ -29,10 +29,13 @@ data class bottomEl(var name:String,var image:Int)
 
 @ExperimentalPagerApi
 @Composable
-fun MainScreen(MainNav:NavHostController,startDestination:String = "Home") {
+fun MainScreen(MainNav:NavHostController,startDestination:String? = "Home") {
     var topTextFieldString by remember {
         mutableStateOf("")
     }
+
+
+
     val bottomNav = rememberNavController()
     val bottomNavItems by bottomNav.currentBackStackEntryAsState()
 
@@ -81,7 +84,7 @@ fun MainScreen(MainNav:NavHostController,startDestination:String = "Home") {
         }
     }
     }) {
-        NavHost(navController = bottomNav, startDestination = startDestination){
+        NavHost(navController = bottomNav, startDestination = startDestination!!){
             composable("Home"){ HomeScreen(bottomNav, MainNav )}
             composable("Profile"){}
             composable("Cart"){}
